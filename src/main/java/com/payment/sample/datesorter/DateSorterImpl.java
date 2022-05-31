@@ -14,7 +14,7 @@ public class DateSorterImpl implements DateSorter {
 
     @Override
     public SortedSet<LocalDate> sortDates(Set<LocalDate> unsortedDates) {
-        TreeSet<LocalDate> sortedDates = new TreeSet<>(this::compareLocalDates);
+        SortedSet<LocalDate> sortedDates = new TreeSet<>(this::compareLocalDates);
 
         emptyIfNull(unsortedDates).stream()
                 .flatMap(Stream::ofNullable)
