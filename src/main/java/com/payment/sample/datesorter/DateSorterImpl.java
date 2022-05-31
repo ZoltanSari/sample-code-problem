@@ -8,18 +8,22 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.apache.commons.collections4.SetUtils.emptyIfNull;
+
 public class DateSorterImpl implements DateSorter {
 
     @Override
     public SortedSet<LocalDate> sortDates(Set<LocalDate> unsortedDates) {
         TreeSet<LocalDate> sortedDates = new TreeSet<>(this::compareLocalDates);
 
-        unsortedDates.stream()
+        emptyIfNull(unsortedDates).stream()
+                .flatMap(Stream::ofNullable)
                 .filter(this::isMonthContainsR)
                 .sorted()
                 .forEach(sortedDates::add);
 
-        unsortedDates.stream()
+        emptyIfNull(unsortedDates).stream()
+                .flatMap(Stream::ofNullable)
                 .filter(date -> !isMonthContainsR(date))
                 .sorted(Comparator.reverseOrder())
                 .forEach(sortedDates::add);
